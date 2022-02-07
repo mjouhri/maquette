@@ -1,0 +1,47 @@
+<mat-form-field appearance="fill" class="myselect">
+    <select matNativeControl >
+      <option value="biblio_de" selected>Biblio de</option>
+      <option value="travail_a_faire_de">Travail à faire de</option>
+    </select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="myselect">
+    <select matNativeControl >
+      <option value="fabrice" selected>Fabrice Reby</option>
+      <option value="mohammed">Mohammed Jouhri</option>
+      <option value="victor">Victor Bonneau</option>
+      <option value="mike">Mike Arezes</option>
+    </select>
+  </mat-form-field>
+
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding matTreeNodePaddingIndent="5">
+      <button *ngIf="node.item !== 'Question 2' && (node.item === 'Question 1' || node.item === 'Question 3')" class="myButtonGreenColor" mat-icon-button disabled></button>
+      <button *ngIf="node.item === 'Question 2'" class="myButtonGreyColor" mat-icon-button disabled></button>
+      <button *ngIf="node.item !== 'Question 2' && node.item !== 'Question 1' && node.item !== 'Question 3'" class="myButtonRedColor" mat-icon-button disabled></button>
+      <div style="margin-left: 10px;">{{node.item}}</div>
+    </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding matTreeNodePaddingIndent="10">
+      <mat-list style="width: 7%; padding-top: 0;">
+        <mat-progress-bar type="success" mode="determinate" value="0"
+                          class="tree-progress-bar" ></mat-progress-bar>
+        <mat-progress-bar type="success" mode="determinate" value="0"
+                          class="tree-progress-bar" ></mat-progress-bar>
+        <mat-progress-bar type="success" mode="determinate" value="100"
+                          class="tree-progress-bar" ></mat-progress-bar>
+        <mat-progress-bar type="success" mode="determinate" value="100"
+                          class="tree-progress-bar"></mat-progress-bar>
+      </mat-list>
+      <button mat-icon-button
+              [attr.aria-label]="'Toggle ' + node.item" matTreeNodeToggle>
+        <mat-icon class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'remove' : 'add'}}
+        </mat-icon>
+      </button>
+      {{node.item}}
+      <mat-progress-bar *ngIf="node.isLoading"
+                        mode="indeterminate"
+                        class="example-tree-progress-bar mat-progress-bar-fill"></mat-progress-bar>
+      
+    </mat-tree-node>
+  </mat-tree>
